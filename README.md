@@ -45,3 +45,5 @@ $ hexo d -p
 
 More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
 
+### $ hexo clean
+Cleans the cache file (db.json) and generated files (public).

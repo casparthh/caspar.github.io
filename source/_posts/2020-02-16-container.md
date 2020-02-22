@@ -2,17 +2,25 @@
 title: Java 容器
 date: 2020-02-16 22:05:29
 toc: true
-description: 
+categories:
+- 技术笔记
 tags: 
 - Thread
 - 容器
 ---
-### 并发容器
+### Java 容器
 容器 分两大类Collection、Map，Collection又分三大类List、Set、Queue队列
-<!--more-->
 
 #### Set 
 Set 与 List, Queue 的主要区别是不会有重复元素
+
+#### ArrayList & LinkedList
+* 没有加锁，线程不安全。  
+* ArrayList是基于数组实现的，LinkedList是基于双链表实现的。
+* LinkedList还实现了Deque接口，Deque接口是Queue接口的子接口，它代表一个双向队列，因此LinkedList可以作为双向对列。
+* 因为Array是基于索引(index)的数据结构，它使用索引在数组中搜索和读取数据是很快的，可以直接返回数组中index位置的元素，因此在随机访问集合元素上有较好的性能。Array获取数据的时间复杂度是O(1),但是要插入、删除数据却是开销很大的，因为这需要移动数组中插入位置之后的的所有元素。
+* 相对于ArrayList，LinkedList的随机访问集合元素时性能较差，因为需要在双向列表中找到要index的位置，再返回；但在插入，删除操作是更快的。
+<!--more-->
 
 #### Queue
 * **Queue 实现的实际上是一个队列，有进有出，它实现了很多对线程友好的API offer、peek、poll，他的一个子类型叫 BlockingQueue对线程友好的API又添加了put和take，这两个实现了阻塞操作，这个是在其他的List、 Set里面都是没有的。这里面最重要的就是是叫做阻塞队列，它的实现的初衷就是为了线程池、高并发做准备的。**
@@ -26,13 +34,6 @@ Set 与 List, Queue 的主要区别是不会有重复元素
 | poll(e) | pollFirst(e) | 获取并删除首元素，失败则返回null |
 | element(e) | getFirst(e) | 获取但不删除首元素，失败则抛出异常 |
 | peek(e) | peekFirst(e) | 获取但不删除首元素，失败则返回null |
-
-#### ArrayList & LinkedList
-* 没有加锁，线程不安全。  
-* ArrayList是基于数组实现的，LinkedList是基于双链表实现的。
-* LinkedList还实现了Deque接口，Deque接口是Queue接口的子接口，它代表一个双向队列，因此LinkedList可以作为双向对列。
-* 因为Array是基于索引(index)的数据结构，它使用索引在数组中搜索和读取数据是很快的，可以直接返回数组中index位置的元素，因此在随机访问集合元素上有较好的性能。Array获取数据的时间复杂度是O(1),但是要插入、删除数据却是开销很大的，因为这需要移动数组中插入位置之后的的所有元素。
-* 相对于ArrayList，LinkedList的随机访问集合元素时性能较差，因为需要在双向列表中找到要index的位置，再返回；但在插入，删除操作是更快的。
 
 #### Vector & HashTable
 最开始java1.0容器里只有两个，第一个叫Vector可以单独的往里扔，还有一个是Hashtable是可以一对一对往里扔的。Vector相对于实现了List接口，Hashtable实现了Map接口，Vector 和 Hashtable 自带锁所以性能低。

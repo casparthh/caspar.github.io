@@ -1,29 +1,29 @@
 ---
 title: 线程池
-date: 2020-02-16 22:05:29
+date: 2020-02-16 21:05:29
 toc: true
+categories:
+- 技术笔记
 tags: 
 - Thread
 ---
-#### Executor
+#### 一、Executor
 执行者，是一个接口类，他有一个方法叫执行，那么执行的东西是 Runnable。
 
-#### ExecutorService
+#### 二、ExecutorService
 是从Executor继承，除了去实现Executor可以去执行一个任务之外，还完善了整个任务执行器的一个生命周期，就拿线程池来举例子，一个线程池里面一堆的线程就是一堆的工人，执行完一个任务之后我这个线程怎么结束啊；  
 线程池定义了这样一些个方法：
-```
-void shutdown();//结束
-List<Runnable> shutdownNow();//马上结束
-boolean isShutdown();//是否结束了
-boolean isTerminated();//是不是整体都执行完了
-boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedException;//等着结束，等多长时间，时间到了还不结束的话他 就返回false
-<T> Future<T> submit(Callable<T> task);
-Future<?> submit(Runnable task);
-List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks) throws InterruptedException;
-<T> T invokeAny(Collection<? extends Callable<T>> tasks) throws InterruptedException, ExecutionException;
-...
-```
+* void shutdown();//结束
+* List<Runnable> shutdownNow();//马上结束
+* boolean isShutdown();//是否结束了
+* boolean isTerminated();//是不是整体都执行完了
+* boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedException;//等着结束，等多长时间，时间到了还不结束的话他 就返回false
+* <T> Future<T> submit(Callable<T> task);
+* Future<?> submit(Runnable task);
+* List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks) throws InterruptedException;
+* <T> T invokeAny(Collection<? extends Callable<T>> tasks) throws InterruptedException, ExecutionException;
 <!--more-->
+
 ```java
 public class ExecutroServiceTest {
 
@@ -42,7 +42,7 @@ public class ExecutroServiceTest {
 他是实现了一些个线程的线程池的生命周期的东西，扩展了Executor的接口，真正的线程池的现实是在ExecutorService的这个基础上来实现的。  
 ExecutorService的时候你会发现他除了Executor执行任务之外还有submit提交任务，执行任务是直接拿过来马上运行，而submit是扔给这个线程池，什么时候运行由这个线程池来决定，相当于 是异步的，我只要往里面一扔就不管了。那好，如果不管的话什么时候他有结果啊，这里面就涉及了比较新的类:比如说Future、RunnableFuture、FutureTask。
 
-#### Callable
+#### 三、Callable
 以前定义一个线程的任务只能去实现Runnable接口，那在1.5之后他就增加了Callable这个接口。  
 Callable是什么，他类似于Runnable，不过 Callable可以有返回值。  
 ```java
@@ -57,12 +57,12 @@ public interface Callable<V> {
 }
 ```
 
-#### Future
+#### 四、Future
 Future代表的是那个Callable被执行完了之后我怎么才能拿到那个结果啊，它会封装到一个Future里面。
 Future将来，未来。未来你执行完之后可以把这个结果放到这个未来有可能执行完的结果里头，所以Future代表的是未来执行完的一个结果。
 把Callable的任务扔给线程池，线程池异步的执行完了，就是把任务交给线程池之后，调用get方法直到有结果之后get会返回。Callable一般是配合线程池和Future来用的。
 
-#### FutureTask
+#### 五、FutureTask
 其实更灵活的一个用法是FutureTask，即是一个Future同时又是一个Task，原来这Callable只能一个Task只能是一个任务但是他不能作为一个Future来用。这个FutureTask相当于是我自己可以作为一个任务来用，同时这个任务完成之后的结果也存在于这个对象里，为什么他能做到这一点，因 为FutureTask他实现了RunnableFuture，而RunnableFuture即实现了Runnable又实现了Future，所以他即是一个任务又是一个Future
 ```java
 public class FutrueTaskTest {
@@ -77,14 +77,14 @@ public class FutrueTaskTest {
 }
 ```
 
-#### CompletableFuture
+#### 六、CompletableFuture
 CompletableFuture他的底层用的是ForkJoinPool，底层特别复杂，但是用法特别灵活。
 
-#### 目前JDK提供的有两种类型
+#### 七、目前JDK提供的有两种类型
 1. ThreadPoolExecutor 普通的线程池
 2. ForkJoinPool
 
-#### ThreadPoolExecutor
+#### 八、ThreadPoolExecutor
 ThreadPoolExecutor他的父类是AbstractExecutorService，AbstractExecutorService 实现了 ExecutorService，再ExecutorService的父类是Executor，所以ThreadPoolExecutor就相当于线程池的执行器  
 
 定义这一个线程池，这里面的七个参数:
@@ -102,7 +102,7 @@ ThreadPoolExecutor他的父类是AbstractExecutorService，AbstractExecutorServi
     * 4:CallerRuns:调用者处理服务  
    一般情况这四种我们会自定义策略，去实现这个拒绝策略的接口，处理的方式是一般我们的消息需要保存下来，并且记录日志。
 
-#### JDK给我们提供了一些默认的线程池的实现
+#### 九、JDK给我们提供了一些默认的线程池的实现
 ##### 1. SingleThreadPool
 只有一个线程，这个一个线程的线程池可以保证我们扔进去的任务是顺序执行的。
 ```
@@ -173,7 +173,7 @@ public static ExecutorService newWorkStealingPool() {
 《Java并发编程实战》作者 Brian Goetz建议，线程池大小与处理器的利用率之比可以使用公式来进行计算估算:线程池=你有多少个cpu 乘以 cpu期望利用率 乘以 (1+ W/C)。W除以C是等待时间与计算时间的比率。
 
 
-#### 线程池的一些5种状态
+#### 十、线程池的一些5种状态
 1. RUNNING:正常运行的;
 2. SHUTDOWN:调用了shutdown方法了进入了shutdown状态; 
 3. STOP:调用了shutdownnow马上让他停止; 

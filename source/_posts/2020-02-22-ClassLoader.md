@@ -1,7 +1,8 @@
 ---
 title: 类加载-初始化
 date: 2020-02-22 14:22:56
-description: 
+categories:
+- 技术笔记
 tags: 
 - JVM
 ---
