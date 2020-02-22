@@ -6,7 +6,7 @@ Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [docume
 ## Quick Start
 ``` bash
 $ cd <ProjectName>
-$ cnpm install
+$ cnpm instal
 $ hexo d -g
 ```
 
