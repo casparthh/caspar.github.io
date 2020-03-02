@@ -211,7 +211,7 @@ TCP  192.168.79.110:80 rr
 VIP=192.168.79.110
 
 # 限制arp请求
-si
+echo "1" > /proc/sys/net/ipv4/conf/lo/arp_ignore
 echo "1" > /proc/sys/net/ipv4/conf/all/arp_ignore
 echo "2" > /proc/sys/net/ipv4/conf/lo/arp_announce
 echo "2" > /proc/sys/net/ipv4/conf/all/arp_announce
