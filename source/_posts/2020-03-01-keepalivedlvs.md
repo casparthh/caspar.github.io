@@ -1,9 +1,9 @@
 ---
-title: 基于Keepalived的LVS实验
+title: 高并发 - 基于Keepalived的LVS实验
 toc: true
 categories:
   - 技术笔记
-date: 2020-03-02 21:35:00
+date: 2020-03-01 2020-03-01 16:53:16
 tags:
 - 高并发
 - LVS
@@ -184,7 +184,7 @@ service keepalived start
 ## 检查网卡是否添加成功
 ifconfig
 
-## 需要显示信息：
+## 主需要显示信息，主正常的时候备没有：
 eth0:1    Link encap:Ethernet  HWaddr 00:0C:29:6F:93:B0  
           inet addr:192.168.79.110  Bcast:0.0.0.0  Mask:255.255.255.0
           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
@@ -201,8 +201,12 @@ TCP  192.168.79.110:80 rr
   -> 192.168.79.102:80            Route   1      0          0         
   -> 192.168.79.103:80            Route   1      0          0 
 
+## 查看负载记录：
+ipvsadm -lnc  
 ```
+#### 测试
 \* 用浏览器访问http://192.168.79.100 验证结果
+\* 分别停掉一台DR 或 主，备 再检验结果
 
 ### 将DR 的隐藏IP配置写成文件
 创建lvsdr.sh，内容如下：

@@ -1,5 +1,5 @@
 ---
-title: 高并发与多线程 - 线程池
+title: 多线程 - 线程池
 date: 2020-02-16 21:05:29
 toc: true
 categories:
