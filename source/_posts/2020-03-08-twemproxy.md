@@ -74,11 +74,9 @@ server_failure_limit: 当auto_eject_host打开后，驱逐一个server之前重�
 `$ service nutcracker start`  
 
 连接到代理程序并测试
-```  
-$ redis-cli -p 22121
-set pass mypassword
-set k1 mytestk1
-```
+`$ redis-cli -p 22121`
+`set pass mypassword`
+`set k1 mytestk1`
 set 多个key 后再分别到多台master上get 验证，由于算法原因，可能会连续很多key存到了同一台redis, 所以多set一些不同的key验证。
 
 其缺点：
