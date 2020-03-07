@@ -65,9 +65,9 @@ alpha:
    - vm1:6379:1
    - vm3:6379:1
 ```
-auto_eject_hosts: 是一个boolean值，用于控制twemproxy是否应该根据server的连接状态重建群集。这个连接状态是由server_failure_limit阀值来控制。默认是false。  
-server_retry_timeout: 单位是毫秒，控制服务器连接的时间间隔，在auto_eject_host被设置为true的时候产生作用。默认是30000 毫秒。  
-server_failure_limit: 控制连接服务器的次数，在auto_eject_host被设置为true的时候产生作用。默认是2。  
+auto_eject_host: 当连接一个server失败次数超过server_failure_limit值时，是否把这个server驱逐出集群，默认是false  
+server_retry_timeout:单位毫秒，当auto_eject_host打开后，重试被临时驱逐的server之前的等待时间    
+server_failure_limit: 当auto_eject_host打开后，驱逐一个server之前重试次数  
 
 ### 运行测试
 启动服务  
