@@ -42,7 +42,7 @@ c. 配置文件nutcracker.yml：
 `$ cp nutcracker.init /etc/init.d/nutcracker`
 `$ chmod +x /etc/init.d/nutcracker`
 
-2.回到编译目录下找到nutcracker.yml配置文件并复制到/tec/nutcracker/目录下
+2.回到编译目录下找到nutcracker.yml配置文件并复制到/etc/nutcracker/目录下
 `$ mkdir /etc/nutcracker`
 `$ cp ./conf/nutcracker.* /etc/nutcracker/`
 
